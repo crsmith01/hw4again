@@ -1,4 +1,38 @@
-//* Questions
+// Global variables
+
+
+// Variables for actually taking the quiz
+const highscoreBtn = document.getElementById("highscore-btn");
+const clearBtn = document.getElementById("clear-btn");
+const reloadBtn = document.getElementById("reload-btn");
+const showTimer = document.getElementById("timeRemaining");
+const startButton = document.getElementById("start-btn");
+const questionContainerEl = document.getElementById("question-container");
+const questionEl = document.getElementById("question");
+const answerBtnsEl = document.getElementById("answer-btns");
+const controlsEl = document.getElementById("controls");
+const introEl = document.getElementById("intro");
+const gameOverEl = document.getElementById("gameOverEl");
+const scoreDisplay = document.getElementById("score");
+let shuffledQuestions;
+let currentQuestionIndex;
+
+// Variables for the timer
+var counter = 60;
+var interval;
+
+// Variables for keeping score and seeing high scores
+const mostRecentScore = localStorage.getItem("mostRecentScore");
+const initialsEl = document.getElementById("initials");
+const highScoresEl = document.getElementById("highScoresEl");
+const highScoresList = document.getElementById("highScoresList");
+var storedHighScores = JSON.parse(localStorage.getItem("highScores"));
+const maxHighScores = 5;
+var highScores = [];
+let score = 0;
+
+
+// Creating array of questions, each of which has an array of answers
 const questions = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -47,47 +81,8 @@ const questions = [
     },
 ];
 
+// Functions required for playing the game
 
-//* Global vars
-// Taking the quiz
-const highscoreBtn = document.getElementById("highscore-btn");
-const clearBtn = document.getElementById("clear-btn");
-const reloadBtn = document.getElementById("reload-btn");
-const showTimer = document.getElementById("timeRemaining");
-const startButton = document.getElementById("start-btn");
-const questionContainerEl = document.getElementById("question-container");
-const questionEl = document.getElementById("question");
-const answerBtnsEl = document.getElementById("answer-btns");
-const controlsEl = document.getElementById("controls");
-const introEl = document.getElementById("intro");
-const gameOverEl = document.getElementById("gameOverEl");
-const scoreDisplay = document.getElementById("score");
-let shuffledQuestions;
-let currentQuestionIndex;
-
-// Scoring/HighScore
-const mostRecentScore = localStorage.getItem("mostRecentScore");
-const initialsEl = document.getElementById("initials");
-const highScoresEl = document.getElementById("highScoresEl");
-const highScoresList = document.getElementById("highScoresList");
-var storedHighScores = JSON.parse(localStorage.getItem("highScores"));
-const maxHighScores = 5;
-var highScores = [];
-let score = 0;
-
-// Timer
-var counter = 60;
-var interval;
-
-//* Event listeners
-startButton.addEventListener("click", startQuiz);
-highscoreBtn.addEventListener("click", showHighScores);
-clearBtn.addEventListener("click", clearHighScores);
-reloadBtn.addEventListener("click", function () {
-    location.reload();
-});
-
-//* Functions to play the game
 // Starting the quiz and timer
 function startQuiz() {
     startTimer();
@@ -138,41 +133,30 @@ function resetState() {
 }
 
 function correctAnswer() {
-    // Add 10 to score
+    // Adds 10 points to the score
     score += 10;
-    // Display "Correct!" and change background color of element for 1 sec
-    controlsEl.innerHTML = "<h3>Correct!</h3>";
-    controlsEl.style.backgroundColor = "green";
-
-    setTimeout(function () {
-        controlsEl.innerHTML = "";
-        controlsEl.style.backgroundColor = "";
-    }, 1000);
-    cheerSound();
+    // Displays "Correct!" and changes background color of element 
+    controlsEl.innerHTML = "<h5>Correct!</h5>";
+    controlsEl.style.backgroundColor = "hsl(145, 100%, 50%)";
 }
 
 function wrongAnswer() {
-    // Reduce timer by 10 seconds
+    // Reduces timer by 10 seconds for incorrect answers
     counter -= 10;
-    // Display "Wrong!"  and change background color of element for 1 sec
-    controlsEl.innerHTML = "<h3>Wrong!</h3>";
-    controlsEl.style.backgroundColor = "red";
-    setTimeout(function () {
-        controlsEl.innerHTML = "";
-        controlsEl.style.backgroundColor = "";
-    }, 1000);
-    booSound();
+    // Displays "Wrong!" and changes background color of element
+    controlsEl.innerHTML = "<h5>Wrong!</h5>";
+    controlsEl.style.backgroundColor = "hsl(0, 100%, 50%)";
 }
 
-// Selecting your answer
 function selectAnswer(event) {
+    // Function occurs when an answer is selected
+
     // Identifies which answer is selected
     const selectedButton = event.target;
     const correct = selectedButton.dataset.correct;
 
-    // Check if answer is correct or incorrect and provides appropriate response
+    // Checks accuracy of answer and provides the corresponding response
     if (correct) {
-        // Display "Correct" for 1 sec if answer is correct
         correctAnswer();
     } else {
         wrongAnswer();
@@ -180,17 +164,17 @@ function selectAnswer(event) {
 
     // Check to see if there are more questions.
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        // If there are more questions, set the next question
+        // Sets the next question (if there are any remaining)
         currentQuestionIndex++;
         setNextQuestion();
     } else {
-        // If there are no more questions, end the quiz
+        // Ends quiz if there are no remaining questions
         gameOver();
     }
 }
 
-//* Timer
 function startTimer() {
+    // Creates and operates time (decreased 1 second at a time)
     interval = setInterval(function () {
         counter--;
         if (counter >= 0) {
@@ -203,8 +187,8 @@ function startTimer() {
     }, 1000);
 }
 
-//* Functions to end the game
 function gameOver() {
+    // Ends game
     questionContainerEl.classList.add("hide");
     controlsEl.classList.add("hide");
     gameOverEl.classList.remove("hide");
@@ -212,8 +196,8 @@ function gameOver() {
     clearInterval(interval);
 }
 
-//* Utilized local storage to save user's information.
 function showHighScores() {
+     // Utilizes local storage to save user's information.
     gameOverEl.classList.add("hide");
     startButton.classList.add("hide");
     questionContainerEl.classList.add("hide");
@@ -237,12 +221,12 @@ function init() {
 }
 
 function storeHighScore() {
-    // Stringify and set "highscore" key in localStorage to todos array
+    // Stringifies and sets "highscore" key in localStorage to array
     localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
 function renderHighScore() {
-    // Render a new li for each High Score
+    //Creates a new list item for each high score
     highScoresList.innerHTML = highScores
         .map((highScores) => {
             return `<li>${highScores.initials}: ${highScores.score}</li>`;
@@ -255,8 +239,16 @@ function clearHighScores() {
     highScoresList.innerHTML = "";
 }
 
-initialsForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+
+// Event listeners 
+startButton.addEventListener("click", startQuiz);
+highscoreBtn.addEventListener("click", showHighScores);
+clearBtn.addEventListener("click", clearHighScores);
+reloadBtn.addEventListener("click", function () {
+    location.reload();
+});
+initialsForm.addEventListener("submit", function (e) {
+    e.preventDefault();
     init();
 
     // Adding high score to array
@@ -265,14 +257,14 @@ initialsForm.addEventListener("submit", function (event) {
         score: score.toString(),
     };
     highScores.push(highscore);
-    initialsEl.value = '';
+    initialsEl.value = "";
 
-    //ordering high scores and capping at 5
+    // Ranks high scores and capping at 10 scores
     highScores.sort((a, b) => b.score - a.score);
 
-    highScores.splice(5);
+    highScores.splice(10);
 
-    // Storing scores in local storage and rendering in DOM
+    // Stores scores in local storage and adds to the DOM
     storeHighScore();
     renderHighScore();
 

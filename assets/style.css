@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Merriweather', serif;
 }
 
 header {
@@ -42,6 +42,7 @@ main {
     margin-left: 4rem;
     max-width: 20%;
     padding: 10px;
+    background-color: white;
 }
 
 #question-container,
@@ -72,7 +73,7 @@ main {
     margin-top: 2rem;
     margin-right: 4rem;
     color: hsl(var(--hue), 50%, 10%);
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 4px;
     padding: 1rem;
 }
@@ -82,7 +83,7 @@ main {
     max-width: 50%;
     justify-content: center;
     align-items: center;
-    background-color: whitesmoke;
+    background-color: white;
     border: 1px solid hsl(var(--hue), 50%, 10%);
     padding: 2rem;
     border-radius: 10px;
@@ -95,7 +96,7 @@ main {
     background-color: hsl(var(--hue), 100%, 50%);
     border-radius: 5px;
     padding: 5px 10px;
-    color: black;
+    color: hsl(var(--hue), 50%, 10%);;
     outline: none;
     display: inline-block;
     justify-content: center;
@@ -115,7 +116,7 @@ main {
 
 .btn:hover {
     cursor: pointer;
-    border-color: black;
+    border-color: hsl(var(--hue), 50%, 10%);;
     box-shadow: 0 0.4rem 1.4rem 0;
     transition: transform 150ms;
     transform: scale(1.03);}
