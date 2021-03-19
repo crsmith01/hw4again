@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="ie-edge">
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+        <title>Coding Quiz!</title>
+    </head>
+    <body>
+        <header class="row">
+            <button type="button" class="btn btn-outline-dark col-md-1" id="highscore-btn">View High Scores</button>
+            <div class="timer ml-auto">
+                <h4>Time remaining:<span class="badge badge-secondary" id="timeRemaining"></span></h4>
+            </div>
+        </header>
+
+        <main class="wrapper">
+            <div class="row">
+                <div class="container col-md-10 hide" id="question-container">
+                    <div id="question">Questions</div>
+                    <div id="answer-btns" class="btn-grid">
+                        <button class="btn">Answer 1</button>
+                        <button class="btn">Answer 2</button>
+                        <button class="btn">Answer 3</button>
+                        <button class="btn">Answer 4</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container col-md-10" id="intro">
+                    <h1>Welcome to the Coding Quiz!</h1>
+                    <p>Try to answer the following code-related questions wtihin the time limit.</p>
+                    <p>Keep in mind that incorrect answers will penalize your score and time by 10 seconds, and correct answers will add 10 points to your final score.</p>
+                    <p>Best of luck!</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container col-md-10 controls" id="controls">
+                    <button class="btn start-btn" id="start-btn">Start</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container col-md-10 hide" id="gameOverEl">
+                    <div id="scoreEl">
+                        <h1>Well done! You scored <span id="score"></span> points!</h1>
+                        <hr/>
+                        <h4>Enter your initials below to save your score.</h4>
+                        <form id="initialsForm" class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="initials" class="sr-only">Initials</label>
+                                <input type="text" class="form-control" id="initials" placeholder="Initials"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Submit Score</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container col-md-10 hide" id="highScoresEl">
+                    <h1>High Scores</h1>
+                    <ul id="highScoresList"></ul>
+                    <button type="button" class="btn btn-outline-dark col-md-4" id="clear-btn">Clear High Scores</button>
+                    <button type="button" class="btn btn-outline-dark col-md-4" id="reload-btn">Try Again?</button>
+                </div>
+            </div>
+        </main>
+        <script src="assets/script.js"></script>
+    </body>
+</html>
